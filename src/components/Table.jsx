@@ -2,16 +2,9 @@ import React, { useContext } from 'react';
 import { PlanetContext } from '../context';
 
 const Table = () => {
-  const { data: { results } } = useContext(PlanetContext);
+  const { data: { results }, filteredPlanets } = useContext(PlanetContext);
 
   return (
-    // <div>
-    //   {
-    //     results
-    //       ? results.map((planet) => (<p key={ planet.name }>{ planet.name }</p>))
-    //       : <p>Loading...</p>
-    //   }
-    // </div>
     results
       ? (
         <table>
@@ -34,7 +27,7 @@ const Table = () => {
           </thead>
           <tbody>
             {
-              results.map((planet) => (
+              filteredPlanets.map((planet) => (
                 <tr
                   key={ planet.name }
                 >
