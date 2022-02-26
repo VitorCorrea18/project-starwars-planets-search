@@ -11,26 +11,24 @@ const INICIAL_NUMERIC_FILTER = {
   value: 0,
 };
 
-//   filterByNumericValues: [ // como é esperado o estado ficar com cada filtro sendo adicionado
-//   {
-//     column: 'population',
-//     comparison: 'maior que',
-//     value: '100000',
-//   },
-//   {
-//     column: 'diameter',
-//     comparison: 'menor que',
-//     value: '8000',
-//   }
-// ]
-
 const FiltersSection = () => {
   const [numericFilter, setNumericFilter] = useState(INICIAL_NUMERIC_FILTER);
+  const [columnOptions, setcolumnOptions] = useState(COLUMN_OPTIONS);
   const [activeFilter, setActiveFilter] = useState([]);
   const { setPlanetsToRender, data, planetsToRender } = useContext(PlanetContext);
 
   const onNumericFilterChange = (value) => {
     setNumericFilter({ ...numericFilter, ...value });
+  };
+
+  const updateColumnOptions = () => {
+    const updatedOptions = columnOptions.filter(
+      (option) => option !== numericFilter.column,
+    );
+
+    setcolumnOptions(updatedOptions);
+    const updateColumnInicialState = { column: updatedOptions[0] };
+    setNumericFilter({ ...numericFilter, ...updateColumnInicialState });
   };
 
   const onButtonFilterClick = () => {
@@ -45,6 +43,7 @@ const FiltersSection = () => {
       setActiveFilter([...activeFilter, numericFilter]);
       setPlanetsToRender(filterResults);
     }
+    updateColumnOptions();
   };
 
   const onEraseFilterClick = (filterToErase) => {
@@ -65,7 +64,7 @@ const FiltersSection = () => {
       >
 
         {
-          COLUMN_OPTIONS.map(
+          columnOptions.map(
             (columnName) => (
               <option key={ columnName } value={ columnName }>{ columnName }</option>),
           )
