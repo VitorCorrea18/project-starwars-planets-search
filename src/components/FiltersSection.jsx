@@ -11,6 +11,19 @@ const INICIAL_NUMERIC_FILTER = {
   value: 0,
 };
 
+//   filterByNumericValues: [ // como é esperado o estado ficar com cada filtro sendo adicionado
+//   {
+//     column: 'population',
+//     comparison: 'maior que',
+//     value: '100000',
+//   },
+//   {
+//     column: 'diameter',
+//     comparison: 'menor que',
+//     value: '8000',
+//   }
+// ]
+
 const FiltersSection = () => {
   const [numericFilter, setNumericFilter] = useState(INICIAL_NUMERIC_FILTER);
   const [activeFilter, setActiveFilter] = useState([]);
@@ -21,15 +34,15 @@ const FiltersSection = () => {
   };
 
   const onButtonFilterClick = () => {
-    const { column, comparison, value } = numericFilter;
-    const newFilter = `${column} | ${comparison} | ${value}`;
+    // const { column, comparison, value } = numericFilter;
+    // const newFilter = `${column} | ${comparison} | ${value}`;
     if (activeFilter.length > 0) {
       const filterResults = applyValueFilters(planetsToRender, numericFilter);
-      setActiveFilter([...activeFilter, newFilter]);
+      setActiveFilter([...activeFilter, numericFilter]);
       setPlanetsToRender(filterResults);
     } else {
       const filterResults = applyValueFilters(data.results, numericFilter); // passa 'data.results' pois 'applyValueFilters()' espera um array
-      setActiveFilter([...activeFilter, newFilter]);
+      setActiveFilter([...activeFilter, numericFilter]);
       setPlanetsToRender(filterResults);
     }
   };
@@ -85,8 +98,8 @@ const FiltersSection = () => {
 
       {
         activeFilter.map((filter) => (
-          <div key={ filter }>
-            <span>{ filter }</span>
+          <div key={ filter.column }>
+            <span>{`${filter.column} | ${filter.comparison} | ${filter.value}`}</span>
             <button
               type="button"
               onClick={ () => onEraseFilterClick(filter) }
