@@ -13,6 +13,7 @@ const INICIAL_NUMERIC_FILTER = {
 
 const FiltersSection = () => {
   const [numericFilter, setNumericFilter] = useState(INICIAL_NUMERIC_FILTER);
+  const [activeFilter, setActiveFilter] = useState([]);
   const { setPlanetsToRender, data } = useContext(PlanetContext);
 
   const onNumericFilterChange = (value) => {
@@ -21,7 +22,15 @@ const FiltersSection = () => {
 
   const onButtonFilterClick = () => {
     const filterResults = applyValueFilters(data, numericFilter);
+    const { column, comparison, value } = numericFilter;
+    const newFilter = `${column} | ${comparison} | ${value}`;
     setPlanetsToRender(filterResults);
+    setActiveFilter([...activeFilter, newFilter]);
+  };
+
+  const onEraseFilterClick = (filterToErase) => {
+    const filters = activeFilter.filter((filter) => filter !== filterToErase);
+    setActiveFilter(filters);
   };
 
   return (
@@ -67,6 +76,21 @@ const FiltersSection = () => {
       >
         Apply Filter
       </button>
+
+      {
+        activeFilter.map((filter) => (
+          <div key={ filter }>
+            <span>{ filter }</span>
+            <button
+              type="button"
+              onClick={ () => onEraseFilterClick(filter) }
+            >
+              X
+            </button>
+          </div>
+        ))
+      }
+
     </section>
 
   );
