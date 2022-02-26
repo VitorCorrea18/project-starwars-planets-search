@@ -1,38 +1,29 @@
 import React, { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import fetchPlanets from '../services/fetchAPI';
-import applyInputFilter from '../helpers/applyFilters';
+import { applyInputFilter } from '../helpers/applyFilters';
 
 export const PlanetContext = createContext();
 
 export const PlanetProvider = ({ children }) => {
-  const [data, setData] = useState({}); // useState recebe chaves pois valor inicial do estado é um objeto
-  const [filterInput, setFilterInput] = useState(''); // estado do "filterInput"
-  const [filteredPlanets, setFilteredPlanets] = useState([]); // estado com os planetas filtrados
+  const [data, setData] = useState({}); // Cria um estado para armazenas o retorno da API e outro para o resultado dos filtros
+  const [planetsToRender, setPlanetsToRender] = useState([]); // useState recebe valor inicial do estado
 
-  const getPlanets = async () => { // chama a fetchPlanets para fazer a busca dos dados na API.
+  const getPlanets = async () => {
     const response = await fetchPlanets();
-    const filterResult = applyInputFilter(response, filterInput); // a função "applyInputFilter" deve receber o retorno da API com todos os planetes mais o valor do input
+    const filterResult = applyInputFilter(response, ''); // "applyInputFilter" recebe o retorno da API mais o valor a ser filtrado
     setData(response);
-    setFilteredPlanets(filterResult);
+    setPlanetsToRender(filterResult);
   };
 
-  useEffect(() => { // "componentdidUpdate", não aceita funções assincronas por isso fiz a "getPlanets"
+  useEffect(() => { // equivalente ao "componentDidUpdate", não aceita funções assincronas por isso chama a "getPlanets"
     getPlanets();
-  }, []); // o lint pede um array, pesquisar o porque depois
+  }, []); // * o lint pede um array, pesquisar o porque depois *
 
-  const handleInputChange = ({ target }) => {
-    setFilterInput(target.value);
-    const filterResult = applyInputFilter(data, target.value);
-    console.log(target.value);
-    setFilteredPlanets(filterResult);
-  };
-
-  const value = { // passa todos os valores para o componentes filhos, podem ser os estados ou funções
+  const value = { // guarda todos os valores que serão passados aos componentes filhos, podem ser os estados ou funções
     data,
-    filterInput,
-    handleInputChange,
-    filteredPlanets,
+    planetsToRender,
+    setPlanetsToRender,
   };
 
   return (
