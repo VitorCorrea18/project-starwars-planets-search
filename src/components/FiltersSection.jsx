@@ -14,18 +14,24 @@ const INICIAL_NUMERIC_FILTER = {
 const FiltersSection = () => {
   const [numericFilter, setNumericFilter] = useState(INICIAL_NUMERIC_FILTER);
   const [activeFilter, setActiveFilter] = useState([]);
-  const { setPlanetsToRender, data } = useContext(PlanetContext);
+  const { setPlanetsToRender, data, planetsToRender } = useContext(PlanetContext);
 
   const onNumericFilterChange = (value) => {
     setNumericFilter({ ...numericFilter, ...value });
   };
 
   const onButtonFilterClick = () => {
-    const filterResults = applyValueFilters(data, numericFilter);
     const { column, comparison, value } = numericFilter;
     const newFilter = `${column} | ${comparison} | ${value}`;
-    setPlanetsToRender(filterResults);
-    setActiveFilter([...activeFilter, newFilter]);
+    if (activeFilter.length > 0) {
+      const filterResults = applyValueFilters(planetsToRender, numericFilter);
+      setActiveFilter([...activeFilter, newFilter]);
+      setPlanetsToRender(filterResults);
+    } else {
+      const filterResults = applyValueFilters(data.results, numericFilter); // passa 'data.results' pois 'applyValueFilters()' espera um array
+      setActiveFilter([...activeFilter, newFilter]);
+      setPlanetsToRender(filterResults);
+    }
   };
 
   const onEraseFilterClick = (filterToErase) => {

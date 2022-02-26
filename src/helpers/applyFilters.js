@@ -8,17 +8,17 @@ export const applyInputFilter = (data, searchInput) => {
 
 export const applyValueFilters = (data, numericFilter) => {
   const { comparison, column, value } = numericFilter;
-  const { results } = data;
+  // const { results } = data;
   switch (comparison) {
   case 'maior que':
-    return results.filter((planet) => Number(planet[column]) > Number(value));
+    return data.filter((planet) => Number(planet[column]) > Number(value));
     // Usa Number() pois os valores vem do DOM como string causando erro na comparação.
 
   case 'menor que':
-    return results.filter((planet) => Number(planet[column]) < Number(value));
+    return data.filter((planet) => Number(planet[column]) < Number(value));
 
   case 'igual a':
-    return results.filter((planet) => Number(planet[column]) === Number(value));
+    return data.filter((planet) => Number(planet[column]) === Number(value));
   default:
     return 'Operador Inválido';
   }
