@@ -2,6 +2,9 @@ import React, { useContext, useState } from 'react';
 import { PlanetContext } from '../context';
 import { applyValueFilters } from '../helpers/applyFilters';
 
+const COLUMN_OPTIONS = [
+  'population', 'orbital_period', 'diameter', 'rotation_period', 'surface_water'];
+
 const INICIAL_NUMERIC_FILTER = {
   column: 'population',
   comparison: 'maior que',
@@ -32,11 +35,14 @@ const FiltersSection = () => {
         data-testid="column-filter"
         onChange={ (e) => onNumericFilterChange({ column: e.target.value }) }
       >
-        <option value="population">population</option>
-        <option value="orbital_period">orbital_period</option>
-        <option value="diameter">diameter</option>
-        <option value="rotation_period">rotation_period</option>
-        <option value="surface_water">surface_water</option>
+
+        {
+          COLUMN_OPTIONS.map(
+            (columnName) => (
+              <option key={ columnName } value={ columnName }>{ columnName }</option>),
+          )
+        }
+
       </select>
 
       <select
