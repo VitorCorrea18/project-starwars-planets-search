@@ -21,6 +21,7 @@ const SearchInput = () => {
 
   return (
     <input
+      className='search_input'
       type="text"
       data-testid="name-filter"
       placeholder="Search"

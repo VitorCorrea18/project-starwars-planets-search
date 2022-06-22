@@ -1,13 +1,74 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  margin: 0px;
+  padding: 0px;
+  background-image: url('./image/72155-space-stars-galaxy.jpg');
+  color: #b8b8b8;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.filter_div {
+  display: flex;
+}
+
+.filter_section {
+  /* padding: 10px; */
+  margin-bottom: 30px;
+  border-radius: 5px;
+}
+
+.search_input {
+  width: 300px;
+  height: 30px;
+  margin: 0 20px;
+  border-radius: 5px;
+}
+
+.filter_select {
+  width: 120px;
+  height: 35px;
+  margin-right: 10px;
+  border-radius: 5px;
+}
+
+.filter_input {
+  height: 30px;
+  width: 80px;
+  margin-right: 20px;
+  border-radius: 5px;
+}
+
+.filter_button {
+  height: 35px;
+  width: 150px;
+  background-color: aliceblue;
+  border: none;
+  border-radius: 5px;
+}
+
+.table {
+  border-collapse: collapse;
+}
+
+.table_head th {
+  border: 1px solid #514e4e;
+  background: #ecf2f4;
+  color: #000000;
+}
+
+/* .table_head tr th {
+  width: 350px;
+} */
+
+.table_body tr {
+  border: 1px solid #514e4e;
+}
+
+.table_body td {
+  font-size: 16px;
+  text-align: center;
+  margin: 2px;
+}
+
+.planet_name {
+  font-size: 22px;
+  font-weight: 600;
 }
