@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import fetchPlanets from '../services/fetchAPI';
+import fetchFilm from '../services/fetchFilms';
 import { applyInputFilter } from '../helpers/applyFilters';
 
 export const PlanetContext = createContext();
@@ -13,8 +14,19 @@ export const PlanetProvider = ({ children }) => {
     const response = await fetchPlanets();
     const filterResult = applyInputFilter(response, ''); // "applyInputFilter" recebe o retorno da API mais o valor a ser filtrado
     setData(response);
-    setPlanetsToRender(filterResult);
+    getFilmsTitles(filterResult);
   };
+
+  const getFilmsTitles = async (planets) => {
+    const result = await Promise.all(planets.map( async (planet) => {
+      const films = await Promise.all(planet.films.map( async (film) => {
+        const result = await fetchFilm(film);
+        return result.title;
+      }))
+      return { ...planet, films };
+    }))
+    setPlanetsToRender(result);
+  }
 
   useEffect(() => { // equivalente ao "componentDidUpdate", não aceita funções assincronas por isso chama a "getPlanets"
     getPlanets();
