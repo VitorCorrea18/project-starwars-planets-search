@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { PlanetContext } from '../context';
+import fetchFilm from '../services/fetchFilms';
 
 const Table = () => {
   const { data: { results }, planetsToRender } = useContext(PlanetContext);
@@ -7,8 +8,8 @@ const Table = () => {
   return (
     results
       ? (
-        <table>
-          <thead>
+        <table className='table'>
+          <thead className='table_head'>
             <tr>
               <th>Name</th>
               <th>Rotation Period</th>
@@ -25,13 +26,13 @@ const Table = () => {
               <th>URL</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className='table_body'>
             {
               planetsToRender.map((planet) => (
                 <tr
                   key={ planet.name }
                 >
-                  <td>{ planet.name }</td>
+                  <td className='planet_name'>{ planet.name }</td>
                   <td>{ planet.rotation_period }</td>
                   <td>{ planet.orbital_period }</td>
                   <td>{ planet.diameter }</td>

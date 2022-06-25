@@ -57,8 +57,8 @@ const FiltersSection = () => {
   // foi pega consultando o repositorio da Marina Fischer. Eu havia feito de outra forma bem mais verbosa
   // que funcionava mas não passava nos testes, então encontrei essa forma bem mais simples e sofisticada.
 
-    <section>
-      <select
+    <section className='filter_section'>
+      <select className='filter_select'
         data-testid="column-filter"
         onChange={ (e) => onNumericFilterChange({ column: e.target.value }) }
       >
@@ -73,6 +73,7 @@ const FiltersSection = () => {
       </select>
 
       <select
+        className='filter_select'
         data-testid="comparison-filter"
         onChange={ (e) => onNumericFilterChange({ comparison: e.target.value }) }
       >
@@ -82,12 +83,14 @@ const FiltersSection = () => {
       </select>
 
       <input
+        className='filter_input'
         data-testid="value-filter"
         type="number"
         value={ numericFilter.value }
         onChange={ (e) => onNumericFilterChange({ value: e.target.value }) }
       />
       <button
+        className='filter_button'
         data-testid="button-filter"
         type="button"
         onClick={ onButtonFilterClick }
