@@ -1,6 +1,5 @@
 import React from 'react';
 import { PlanetProvider } from './context/index';
-import './App.css';
 import SearchInput from './components/SearchInput';
 import Table from './components/Table';
 import FiltersSection from './components/FiltersSection';
